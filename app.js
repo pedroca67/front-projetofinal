@@ -248,6 +248,22 @@ app.post('/usuarios/salvar', verificarLogin, verificarAdmin, async (req, res) =>
     }
 });
 
+app.get('/os/detalhes/:id', verificarLogin, async (req, res) => {
+    try {
+        const resposta = await axios.get(`http://localhost:8080/api/os/${req.params.id}`);
+        
+        res.render('os_detalhes', { 
+            os: resposta.data, 
+            usuario: req.session.usuario,
+            papel: req.session.papel,
+            paginaAtual: 'os'
+        });
+    } catch (erro) {
+        console.error("Erro ao buscar detalhes:", erro.message);
+        res.redirect('/os');
+    }
+});
+
 app.listen(port, () => {
     console.log(`Sistema rodando em http://localhost:${port}`);
 });

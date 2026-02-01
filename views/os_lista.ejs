@@ -45,6 +45,16 @@
                                 </span>
                             </td>
                             <td>
+                                <a href="/os/detalhes/<%= os.id %>" class="button is-small is-link is-light"
+                                    title="Ver Detalhes">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+
+                                <% if(os.status==='ABERTA' ) { %>
+                                    <% } %>
+                            </td>
+                            <td>
+
                                 <% if(os.status==='ABERTA' ) { %>
                                     <a href="/os/finalizar/<%= os.id %>" class="button is-small is-success"
                                         title="Finalizar">
@@ -55,6 +65,7 @@
                                         title="Cancelar">
                                         <i class="fa-solid fa-ban"></i>
                                     </button>
+
                                     <% } %>
 
                                         <% if(typeof papel !=='undefined' && papel==='ADMIN' ) { %>
