@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | Sistema OS</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f5f7fa; height: 100vh; display: flex; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body>
+    <div class="box" style="width: 100%; max-width: 400px;">
+        <div class="has-text-centered mb-5">
+            <span class="icon is-large has-text-primary">
+                <i class="fa-solid fa-screwdriver-wrench fa-3x"></i>
+            </span>
+            <h1 class="title is-4 mt-2">Sistema OS</h1>
+        </div>
+
+        <% if (typeof erro !== 'undefined') { %>
+            <div class="notification is-danger is-light is-small">
+                <%= erro %>
+            </div>
+        <% } %>
+
+        <form action="/login" method="POST">
+            <div class="field">
+                <label class="label">Usuário</label>
+                <div class="control has-icons-left">
+                    <input class="input" type="text" name="username" placeholder="admin" required autofocus>
+                    <span class="icon is-small is-left"><i class="fa-solid fa-user"></i></span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Senha</label>
+                <div class="control has-icons-left">
+                    <input class="input" type="password" name="password" placeholder="******" required>
+                    <span class="icon is-small is-left"><i class="fa-solid fa-lock"></i></span>
+                </div>
+            </div>
+
+            <button type="submit" class="button is-primary is-fullwidth mt-5">Entrar</button>
+        </form>
+        
+        <p class="has-text-centered mt-4 is-size-7 has-text-grey">
+            Gestão de Clientes e Ordens de Serviço
+        </p>
+    </div>
+</body>
+</html>

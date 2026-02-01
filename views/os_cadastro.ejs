@@ -1,0 +1,73 @@
+<%- include('partials/header') %>
+
+<div class="columns is-centered mt-4">
+    <div class="column is-6">
+
+        <div class="card">
+            <header class="card-header has-background-link">
+                <p class="card-header-title has-text-white is-centered">
+                    <span class="icon mr-2"><i class="fa-solid fa-file-circle-plus"></i></span>
+                    Nova Ordem de Serviço
+                </p>
+            </header>
+
+            <div class="card-content">
+                <form action="/os/salvar" method="POST">
+                    
+                    <div class="field">
+                        <label class="label">Cliente</label>
+                        <div class="control has-icons-left">
+                            <div class="select is-fullwidth">
+                                <select name="cliente_id" required>
+                                    <option value="" disabled selected>Selecione um cliente...</option>
+                                    <% if(clientes && clientes.length > 0) { %>
+                                        <% clientes.forEach(function(c) { %>
+                                            <option value="<%= c.id %>"><%= c.nome %> (CPF: <%= c.cpf %>)</option>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <option disabled>Nenhum cliente cadastrado</option>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <span class="icon is-small is-left"><i class="fa-solid fa-user"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Descrição do Problema</label>
+                        <div class="control">
+                            <textarea class="textarea" name="descricao" placeholder="Ex: Formatação e Backup" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Valor (R$)</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="number" step="0.01" name="valor" placeholder="150.00" required>
+                            <span class="icon is-small is-left"><i class="fa-solid fa-money-bill"></i></span>
+                            <p class="help">Use ponto para centavos (ex: 150.50)</p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="field is-grouped is-grouped-centered">
+                        <div class="control">
+                            <button type="submit" class="button is-link is-medium is-fullwidth">
+                                Salvar OS
+                            </button>
+                        </div>
+                        <div class="control">
+                            <a href="/os" class="button is-light is-medium">
+                                Cancelar
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<%- include('partials/footer') %>

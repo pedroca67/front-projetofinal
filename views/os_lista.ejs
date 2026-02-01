@@ -1,0 +1,116 @@
+<%- include('partials/header') %>
+
+    <div class="level">
+        <div class="level-left">
+            <h1 class="title">Ordens de Serviço</h1>
+        </div>
+        <div class="level-right">
+            <a href="/os/nova" class="button is-link">
+                <i class="fa-solid fa-plus mr-2"></i>Nova OS
+            </a>
+        </div>
+    </div>
+
+    <div class="box">
+        <table class="table is-fullwidth is-striped is-hoverable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Cliente</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if(listaOs && listaOs.length> 0) { %>
+                    <% listaOs.forEach(function(os) { %>
+                        <tr>
+                            <td>
+                                <%= os.id %>
+                            </td>
+                            <td>
+                                <%= os.cliente ? os.cliente.nome : 'Cliente Removido' %>
+                            </td>
+                            <td>
+                                <%= os.descricao %>
+                            </td>
+                            <td>R$ <%= os.valor %>
+                            </td>
+                            <td>
+                                <span
+                                    class="tag <%= os.status === 'ABERTA' ? 'is-warning' : (os.status === 'FINALIZADA' ? 'is-success' : 'is-danger') %>">
+                                    <%= os.status %>
+                                </span>
+                            </td>
+                            <td>
+                                <% if(os.status==='ABERTA' ) { %>
+                                    <a href="/os/finalizar/<%= os.id %>" class="button is-small is-success"
+                                        title="Finalizar">
+                                        <i class="fa-solid fa-check"></i>
+                                    </a>
+
+                                    <button onclick="abrirModal('<%= os.id %>')" class="button is-small is-danger"
+                                        title="Cancelar">
+                                        <i class="fa-solid fa-ban"></i>
+                                    </button>
+                                    <% } %>
+
+                                        <% if(typeof papel !=='undefined' && papel==='ADMIN' ) { %>
+                                            <a href="/os/excluir/<%= os.id %>" class="button is-small is-light"
+                                                onclick="return confirm('Tem certeza que deseja apagar o registro?')">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                            <% } %>
+                            </td>
+                        </tr>
+                        <% }); %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="6" class="has-text-centered">Nenhuma OS encontrada.</td>
+                                </tr>
+                                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="modalCancelamento" class="modal">
+        <div class="modal-background" onclick="fecharModal()"></div>
+        <div class="modal-card">
+            <header class="modal-card-head has-background-danger">
+                <p class="modal-card-title has-text-white">Confirmar Cancelamento</p>
+                <button class="delete" aria-label="close" onclick="fecharModal()"></button>
+            </header>
+            <section class="modal-card-body has-text-centered">
+                <span class="icon is-large has-text-danger mb-4">
+                    <i class="fa-solid fa-triangle-exclamation fa-3x"></i>
+                </span>
+                <p class="title is-5">Deseja realmente cancelar esta OS?</p>
+                <p>O status será alterado para <strong>CANCELADA</strong>.</p>
+            </section>
+            <footer class="modal-card-foot is-justify-content-center">
+                <a id="btnConfirmar" href="#" class="button is-danger">Sim, Cancelar</a>
+                <button class="button" onclick="fecharModal()">Voltar</button>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        function abrirModal(idOs) {
+            var modal = document.getElementById('modalCancelamento');
+            var btn = document.getElementById('btnConfirmar');
+
+            // Configura o link do botão Sim para o ID correto
+            btn.href = '/os/cancelar/' + idOs;
+
+            // Mostra o modal
+            modal.classList.add('is-active');
+        }
+
+        function fecharModal() {
+            document.getElementById('modalCancelamento').classList.remove('is-active');
+        }
+    </script>
+
+    <%- include('partials/footer') %>

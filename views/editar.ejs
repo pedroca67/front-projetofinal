@@ -1,0 +1,73 @@
+<%- include('partials/header') %>
+
+<div class="columns is-centered mt-4">
+    <div class="column is-6-tablet is-5-desktop">
+
+        <div class="card">
+            <header class="card-header has-background-warning">
+                <p class="card-header-title has-text-dark is-centered is-size-4">
+                    <span class="icon mr-2"><i class="fa-solid fa-pen-to-square"></i></span>
+                    Editar Cliente #<%= cliente.id %>
+                </p>
+            </header>
+
+            <div class="card-content">
+                <form action="/atualizar" method="POST">
+
+                    <input type="hidden" name="id" value="<%= cliente.id %>">
+
+                    <div class="field">
+                        <label class="label">Nome Completo</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" name="nome" value="<%= cliente.nome %>" required>
+                            <span class="icon is-small is-left"><i class="fa-solid fa-user"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">CPF</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" name="cpf" value="<%= cliente.cpf %>" required>
+                            <span class="icon is-small is-left"><i class="fa-solid fa-id-card"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="email" name="email" value="<%= cliente.email %>" required>
+                            <span class="icon is-small is-left"><i class="fa-solid fa-envelope"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Telefone</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" name="telefone" value="<%= cliente.telefone %>">
+                            <span class="icon is-small is-left"><i class="fa-solid fa-phone"></i></span>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="field is-grouped is-grouped-centered">
+                        <div class="control">
+                            <button type="submit" class="button is-warning is-medium is-fullwidth has-text-weight-bold">
+                                Salvar Alterações
+                            </button>
+                        </div>
+                        <div class="control">
+                            <a href="/clientes" class="button is-light is-medium">
+                                Cancelar
+                            </a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<%- include('partials/footer') %>

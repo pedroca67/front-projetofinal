@@ -1,0 +1,71 @@
+<%- include('partials/header') %>
+
+<div class="columns is-centered mt-4">
+    <div class="column is-6-tablet is-5-desktop">
+
+        <div class="card">
+            <header class="card-header has-background-primary">
+                <p class="card-header-title has-text-white is-centered is-size-4">
+                    <span class="icon mr-2"><i class="fa-solid fa-user-plus"></i></span>
+                    Cadastrar Cliente
+                </p>
+            </header>
+
+            <div class="card-content">
+                <form action="/salvar" method="POST">
+
+                    <div class="field">
+                        <label class="label">Nome Completo</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" name="nome" placeholder="Ex: João Silva" required>
+                            <span class="icon is-small is-left"><i class="fa-solid fa-user"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">CPF</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" name="cpf" placeholder="000.000.000-00" required>
+                            <span class="icon is-small is-left"><i class="fa-solid fa-id-card"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="email" name="email" placeholder="cliente@email.com" required>
+                            <span class="icon is-small is-left"><i class="fa-solid fa-envelope"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Telefone</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="tel" name="telefone" placeholder="(XX) 9XXXX-XXXX">
+                            <span class="icon is-small is-left"><i class="fa-solid fa-phone"></i></span>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="field is-grouped is-grouped-centered">
+                        <div class="control">
+                            <button type="submit" class="button is-primary is-medium is-fullwidth">
+                                Salvar Dados
+                            </button>
+                        </div>
+                        <div class="control">
+                            <a href="/clientes" class="button is-light is-medium">
+                                Cancelar
+                            </a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema OS</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="has-background-light">
+    
+    <nav class="navbar is-dark mb-5">
+        <div class="navbar-brand">
+            <a class="navbar-item has-text-weight-bold is-size-4" href="/">
+                <i class="fa-solid fa-screwdriver-wrench mr-2"></i>
+                Sistema OS
+            </a>
+        </div>
+
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                
+                <% if(typeof papel !== 'undefined' && papel === 'ADMIN') { %>
+                    <a href="/" class="navbar-item <%= paginaAtual == 'dashboard' ? 'is-active' : '' %>">
+                        Dashboard
+                    </a>
+                <% } %>
+
+                <a href="/clientes" class="navbar-item <%= paginaAtual == 'clientes' ? 'is-active' : '' %>">
+                    Clientes
+                </a>
+
+                <a href="/os" class="navbar-item <%= paginaAtual == 'os' ? 'is-active' : '' %>">
+                    Ordens de Serviço
+                </a>
+
+                <% if(typeof papel !== 'undefined' && papel === 'ADMIN') { %>
+                    <a href="/usuarios/novo" class="navbar-item <%= paginaAtual == 'admin' ? 'is-active' : '' %>">
+                        <span class="has-text-warning">Cadastrar Usuário</span>
+                    </a>
+                <% } %>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <% if(typeof usuario !== 'undefined') { %>
+                        <span class="tag is-info mr-3">
+                            <i class="fa-solid fa-user mr-1"></i> <%= usuario %>
+                            <% if(typeof papel !== 'undefined') { %>
+                                (<%= papel %>)
+                            <% } %>
+                        </span>
+                        <a href="/logout" class="button is-danger is-small">Sair</a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container pb-6">

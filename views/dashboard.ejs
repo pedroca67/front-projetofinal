@@ -1,0 +1,85 @@
+<%- include('partials/header') %>
+
+    <h1 class="title">Visão Geral</h1>
+    <h2 class="subtitle">Bem-vindo, <%= usuario %>!</h2>
+
+    <div class="tile is-ancestor">
+        
+        <div class="tile is-parent">
+            <article class="tile is-child box has-background-info-light">
+                <p class="title has-text-info"><%= dados.totalClientes %></p>
+                <p class="subtitle">Total de Clientes</p>
+                <span class="icon is-large has-text-info">
+                    <i class="fa-solid fa-users fa-3x"></i>
+                </span>
+            </article>
+        </div>
+
+        <div class="tile is-parent">
+            <article class="tile is-child box has-background-warning-light">
+                <p class="title has-text-warning-dark"><%= dados.osAbertas %></p>
+                <p class="subtitle">OS Pendentes</p>
+                <span class="icon is-large has-text-warning-dark">
+                    <i class="fa-solid fa-clock fa-3x"></i>
+                </span>
+            </article>
+        </div>
+
+        <% if(papel === 'ADMIN') { %>
+            <div class="tile is-parent">
+                <article class="tile is-child box has-background-success-light">
+                    <p class="title has-text-success-dark">R$ <%= dados.faturamentoTotal %></p>
+                    <p class="subtitle">Faturamento Total</p>
+                    <span class="icon is-large has-text-success-dark">
+                        <i class="fa-solid fa-sack-dollar fa-3x"></i>
+                    </span>
+                </article>
+            </div>
+        <% } %>
+
+    </div>
+
+    <h3 class="title is-4 mt-6">Ações Rápidas</h3>
+    <hr class="mt-2 mb-5">
+
+    <div class="columns">
+        
+        <div class="column is-4">
+            <a href="/cadastro" class="box has-text-centered has-background-white-ter is-clickable">
+                <span class="icon is-large mb-3 has-text-link">
+                    <i class="fa-solid fa-user-plus fa-2x"></i>
+                </span>
+                <p class="title is-5 is-size-6-mobile has-text-link">Novo Cliente</p>
+                <p class="subtitle is-6">Cadastrar pessoa física</p>
+            </a>
+        </div>
+
+        <div class="column is-4">
+            <a href="/os/nova" class="box has-text-centered has-background-white-ter is-clickable">
+                <span class="icon is-large mb-3 has-text-link">
+                    <i class="fa-solid fa-screwdriver-wrench fa-2x"></i>
+                </span>
+                <p class="title is-5 is-size-6-mobile has-text-link">Nova OS</p>
+                <p class="subtitle is-6">Abrir serviço</p>
+            </a>
+        </div>
+        
+        <% if(papel === 'ADMIN') { %>
+            <div class="column is-4">
+                <a href="/usuarios/novo" class="box has-text-centered has-background-warning-light is-clickable">
+                    <span class="icon is-large mb-3 has-text-warning-dark">
+                        <i class="fa-solid fa-user-shield fa-2x"></i>
+                    </span>
+                    <p class="title is-5 is-size-6-mobile has-text-warning-dark">Criar Usuário</p>
+                    <p class="subtitle is-6">Acesso ao sistema</p>
+                </a>
+            </div>
+        <% } %>
+    </div>
+
+    <style>
+        .is-clickable { transition: transform 0.2s; }
+        .is-clickable:hover { transform: translateY(-5px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    </style>
+
+<%- include('partials/footer') %>

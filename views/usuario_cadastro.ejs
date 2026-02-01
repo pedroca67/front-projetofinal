@@ -1,0 +1,73 @@
+<%- include('partials/header') %>
+
+<div class="columns is-centered mt-4">
+    <div class="column is-6-tablet is-5-desktop">
+
+        <div class="card">
+            <header class="card-header has-background-warning-dark">
+                <p class="card-header-title has-text-white is-centered is-size-4">
+                    <span class="icon mr-2"><i class="fa-solid fa-user-shield"></i></span>
+                    Novo Usuário
+                </p>
+            </header>
+
+            <div class="card-content">
+                <form action="/usuarios/salvar" method="POST">
+
+                    <div class="field">
+                        <label class="label">Nome de Usuário</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" name="username" placeholder="Ex: joao.silva" required>
+                            <span class="icon is-small is-left"><i class="fa-solid fa-user"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Senha</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="password" name="password" placeholder="******" required>
+                            <span class="icon is-small is-left"><i class="fa-solid fa-lock"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Nível de Acesso</label>
+                        <div class="control has-icons-left">
+                            <div class="select is-fullwidth">
+                                <select name="papel" required>
+                                    <option value="" disabled selected>Selecione o nível...</option>
+                                    <option value="FUNCIONARIO">Funcionário (Acesso Padrão)</option>
+                                    <option value="ADMIN">Administrador (Acesso Total)</option>
+                                </select>
+                            </div>
+                            <span class="icon is-small is-left"><i class="fa-solid fa-id-badge"></i></span>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="field is-grouped is-grouped-centered">
+                        <div class="control">
+                            <button type="submit" class="button is-warning is-medium is-fullwidth has-text-weight-bold">
+                                Criar Usuário
+                            </button>
+                        </div>
+                        <div class="control">
+                            <a href="/" class="button is-light is-medium">
+                                Cancelar
+                            </a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        
+        <p class="has-text-centered mt-4 is-size-7 has-text-grey">
+            Usuários novos já podem logar imediatamente.
+        </p>
+
+    </div>
+</div>
+
+<%- include('partials/footer') %>
