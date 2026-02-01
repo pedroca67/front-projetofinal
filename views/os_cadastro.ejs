@@ -1,73 +1,129 @@
 <%- include('partials/header') %>
 
-<div class="columns is-centered mt-4">
-    <div class="column is-6">
+    <div class="columns is-centered mt-4">
+        <div class="column is-6">
 
-        <div class="card">
-            <header class="card-header has-background-link">
-                <p class="card-header-title has-text-white is-centered">
-                    <span class="icon mr-2"><i class="fa-solid fa-file-circle-plus"></i></span>
-                    Nova Ordem de Serviço
-                </p>
-            </header>
+            <div class="card">
+                <header class="card-header has-background-link">
+                    <p class="card-header-title has-text-white is-centered">
+                        <span class="icon mr-2"><i class="fa-solid fa-file-circle-plus"></i></span>
+                        Nova Ordem de Serviço
+                    </p>
+                </header>
 
-            <div class="card-content">
-                <form action="/os/salvar" method="POST">
-                    
-                    <div class="field">
-                        <label class="label">Cliente</label>
-                        <div class="control has-icons-left">
-                            <div class="select is-fullwidth">
-                                <select name="cliente_id" required>
-                                    <option value="" disabled selected>Selecione um cliente...</option>
-                                    <% if(clientes && clientes.length > 0) { %>
-                                        <% clientes.forEach(function(c) { %>
-                                            <option value="<%= c.id %>"><%= c.nome %> (CPF: <%= c.cpf %>)</option>
-                                        <% }); %>
-                                    <% } else { %>
-                                        <option disabled>Nenhum cliente cadastrado</option>
-                                    <% } %>
-                                </select>
+                <div class="card-content">
+                    <form action="/os/salvar" method="POST">
+
+                        <div class="box has-background-white-ter">
+                            <h3 class="title is-5"><i class="fa-solid fa-user mr-2"></i>Cliente</h3>
+                            <div class="field">
+                                <div class="control has-icons-left">
+                                    <div class="select is-fullwidth">
+                                        <select name="cliente_id" required>
+                                            <option value="" disabled selected>Selecione um cliente...</option>
+                                            <% if(clientes && clientes.length> 0) { %>
+                                                <% clientes.forEach(function(c) { %>
+                                                    <option value="<%= c.id %>">
+                                                        <%= c.nome %> (CPF: <%= c.cpf %>)
+                                                    </option>
+                                                    <% }); %>
+                                                        <% } %>
+                                        </select>
+                                    </div>
+                                    <span class="icon is-small is-left"><i class="fa-solid fa-user"></i></span>
+                                </div>
                             </div>
-                            <span class="icon is-small is-left"><i class="fa-solid fa-user"></i></span>
                         </div>
-                    </div>
 
-                    <div class="field">
-                        <label class="label">Descrição do Problema</label>
-                        <div class="control">
-                            <textarea class="textarea" name="descricao" placeholder="Ex: Formatação e Backup" required></textarea>
-                        </div>
-                    </div>
+                        <div class="box has-background-white-ter">
+                            <h3 class="title is-5"><i class="fa-solid fa-mobile-screen mr-2"></i>Dados do Aparelho</h3>
 
-                    <div class="field">
-                        <label class="label">Valor (R$)</label>
-                        <div class="control has-icons-left">
-                            <input class="input" type="number" step="0.01" name="valor" placeholder="150.00" required>
-                            <span class="icon is-small is-left"><i class="fa-solid fa-money-bill"></i></span>
-                            <p class="help">Use ponto para centavos (ex: 150.50)</p>
-                        </div>
-                    </div>
+                            <div class="columns">
+                                <div class="column is-6">
+                                    <div class="field">
+                                        <label class="label">Marca</label>
+                                        <div class="control">
+                                            <input class="input" type="text" name="marca"
+                                                placeholder="Ex: Samsung, Apple" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column is-6">
+                                    <div class="field">
+                                        <label class="label">Modelo</label>
+                                        <div class="control">
+                                            <input class="input" type="text" name="modelo"
+                                                placeholder="Ex: Galaxy S22, iPhone 11" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                    <hr>
+                            <div class="columns">
+                                <div class="column is-6">
+                                    <div class="field">
+                                        <label class="label">IMEI / Serial</label>
+                                        <div class="control">
+                                            <input class="input" type="text" name="imei"
+                                                placeholder="Digite *#06# no aparelho">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column is-6">
+                                    <div class="field">
+                                        <label class="label">Senha / Padrão</label>
+                                        <div class="control">
+                                            <input class="input" type="text" name="senha_dispositivo"
+                                                placeholder="Ex: 1234 ou Desenho em L">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                    <div class="field is-grouped is-grouped-centered">
-                        <div class="control">
-                            <button type="submit" class="button is-link is-medium is-fullwidth">
-                                Salvar OS
-                            </button>
+                            <div class="field">
+                                <label class="label">Acessórios deixados</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="acessorios"
+                                        placeholder="Ex: Capinha, Carregador, Chip...">
+                                </div>
+                            </div>
                         </div>
-                        <div class="control">
-                            <a href="/os" class="button is-light is-medium">
-                                Cancelar
-                            </a>
+
+                        <div class="box has-background-white-ter">
+                            <h3 class="title is-5"><i class="fa-solid fa-wrench mr-2"></i>Serviço</h3>
+
+                            <div class="field">
+                                <label class="label">Defeito Relatado (Pelo Cliente)</label>
+                                <div class="control">
+                                    <textarea class="textarea" name="descricao"
+                                        placeholder="Ex: Não carrega, tela quebrada..." required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Orçamento Inicial (R$)</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="number" step="0.01" name="valor"
+                                        placeholder="0.00 se for analisar" required>
+                                    <span class="icon is-small is-left"><i class="fa-solid fa-money-bill"></i></span>
+                                </div>
+                                <p class="help">Coloque 0 se for apenas para análise.</p>
+                            </div>
                         </div>
-                    </div>
-                </form>
+
+                        <div class="field is-grouped is-grouped-centered mt-5">
+                            <div class="control">
+                                <button class="button is-link is-medium">Salvar OS</button>
+                            </div>
+                            <div class="control">
+                                <a href="/os" class="button is-light is-medium">Cancelar</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
+
         </div>
-
     </div>
-</div>
 
-<%- include('partials/footer') %>
+    <%- include('partials/footer') %>
