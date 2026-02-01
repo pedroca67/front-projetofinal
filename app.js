@@ -53,10 +53,11 @@ app.post('/login', async (req, res) => {
         });
 
         req.session.usuario = username;
+        req.session.senha = password; 
+
         const papel = resposta.data.papel || 'FUNCIONARIO';
         req.session.papel = papel;
 
-        // --- ALTERAÇÃO 1: Todo mundo vai para o Dashboard (Painel Bonito) ---
         res.redirect('/'); 
 
     } catch (erro) {
@@ -64,6 +65,7 @@ app.post('/login', async (req, res) => {
         res.render('login', { erro: "Usuário ou senha incorretos!" });
     }
 });
+
 
 app.get('/logout', (req, res) => {
     req.session.destroy();
@@ -188,14 +190,30 @@ app.get('/os/nova', verificarLogin, async (req, res) => {
 
 app.post('/os/salvar', verificarLogin, async (req, res) => {
     try {
+        // Capturamos TODOS os campos novos que vêm do formulário (req.body)
         const novaOS = {
             descricao: req.body.descricao,
-            valor: parseFloat(req.body.valor), 
-            cliente: { id: req.body.cliente_id } 
+            valor: parseFloat(req.body.valor),
+            cliente: { id: req.body.cliente_id },
+            // CAMPOS NOVOS ABAIXO:
+            marca: req.body.marca,
+            modelo: req.body.modelo,
+            imei: req.body.imei,
+            senhaDispositivo: req.body.senha_dispositivo, // Note o nome igual ao do Java
+            acessorios: req.body.acessorios
         };
-        await axios.post('http://localhost:8080/api/os', novaOS);
+
+        // Enviamos para o Java passando a autenticação da sessão para evitar erro 403
+        await axios.post('http://localhost:8080/api/os', novaOS, {
+            auth: {
+                username: req.session.usuario,
+                password: req.session.senha
+            }
+        }); 
+
         res.redirect('/os');
     } catch (erro) {
+        console.error("Erro ao salvar OS:", erro.message);
         res.send("Erro ao salvar: " + erro.message);
     }
 });
@@ -250,18 +268,30 @@ app.post('/usuarios/salvar', verificarLogin, verificarAdmin, async (req, res) =>
 
 app.get('/os/detalhes/:id', verificarLogin, async (req, res) => {
     try {
-        const resposta = await axios.get(`http://localhost:8080/api/os/${req.params.id}`);
+        const id = req.params.id;
         
+        // Aqui está o "pulo do gato": Mandamos o usuário e senha 
+        // que estão salvos na sessão do Node para o Java.
+        const resposta = await axios.get(`http://localhost:8080/api/os/${id}`, {
+            auth: {
+                username: req.session.usuario,
+                password: req.session.senha // Certifique-se de salvar a senha no login!
+            }
+        });
+
         res.render('os_detalhes', { 
             os: resposta.data, 
             usuario: req.session.usuario,
             papel: req.session.papel,
             paginaAtual: 'os'
         });
-    } catch (erro) {
-        console.error("Erro ao buscar detalhes:", erro.message);
-        res.redirect('/os');
-    }
+    }  catch (erro) {
+    console.log("STATUS:", erro.response?.status);
+    console.log("DATA:", erro.response?.data);
+
+    res.send("Erro ao buscar OS. Veja o console.");
+}
+
 });
 
 app.listen(port, () => {
